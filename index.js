@@ -34,6 +34,35 @@ app.use(express.json());
 
 app.get("/", (req, res) => res.send("Express started"));
 
+app.post("/add/recipe", async (req, res) => {
+  const recipeData = req.body;
+
+  try {
+    const { name, cusineType, imageLink, ingredients, instructions } =
+      recipeData;
+
+    const newRecipe = new Recipe({
+      name,
+      cusineType,
+      imageLink,
+      ingredients,
+      instructions,
+    });
+
+    const savedRecipe = newRecipe.save();
+
+    if (!savedRecipe)
+      return res.status(404).json({ message: "Cannot save recipe data" });
+
+    return res
+      .status(201)
+      .json({ message: "Saved recipe data successfully", savedRecipe });
+  } catch (error) {
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+/*
 app.post(
   "/add/recipe",
   upload.fields([{ name: "imageLink", maxCount: 1 }]),
@@ -80,6 +109,7 @@ app.post(
     }
   }
 );
+*/
 
 app.get("/get/all/recipe", async (req, res) => {
   try {
