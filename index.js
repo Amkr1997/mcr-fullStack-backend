@@ -19,9 +19,8 @@ app.use(cors(corsOptions));
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    const assetsPath = path.join(__dirname, "assets");
-    console.log(assetsPath);
-    return cb(null, assetsPath);
+    //const assetsPath = path.join(__dirname, "assets");
+    return cb(null, "/tmp");
   },
 
   filename: function (req, file, cb) {
